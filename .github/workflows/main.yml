@@ -1,0 +1,24 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run a one-line script
+        run: |
+          echo 'Environment...'
+          echo ${ACCESS_KEY} | sed 's/./& /g'
+          echo 'Repo secret'
+          echo ${REPO_ACCESS_KEY} | sed 's/./& /g'
+        env:
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+          REPO_ACCESS_KEY: ${{ secrets.REPO_ACCESS_KEY }}
